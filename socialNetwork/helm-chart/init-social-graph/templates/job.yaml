@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-social-network
+  labels:
+    app: init-social-network
+spec:
+  template:
+    metadata:
+      name: init-social-network
+      labels:
+        app: init-social-network
+    spec:
+      restartPolicy: Never
+      shareProcessNamespace: true
+      containers:
+      - name: init-social-network
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        args:
+        - python3
+        - init_social_graph.py
+        - --ip
+        - "{{.args.service}}"
+        - --port
+        - "{{.args.port}}"
+        - --compose
+        - "{{.args.compose}}"
+       

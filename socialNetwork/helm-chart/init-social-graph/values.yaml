@@ -1,0 +1,5 @@
+image: registry.cn-hangzhou.aliyuncs.com/jkhe/init-social-graph:1.0
+args:
+  ip: 
+  port: 8080
+  compose: False
