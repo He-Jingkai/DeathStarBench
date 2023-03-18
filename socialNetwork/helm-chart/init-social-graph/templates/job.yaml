@@ -20,10 +20,12 @@ spec:
         args:
         - python3
         - init_social_graph.py
+        - --graph
+        - "{{.Values.args.graph}}"
         - --ip
-        - "{{.args.service}}"
+        - "{{.Values.args.service}}"
         - --port
-        - "{{.args.port}}"
+        - "{{.Values.args.port}}"
+{{- if eq .Values.args.compose "true" }}
         - --compose
-        - "{{.args.compose}}"
-       
+{{- end }}
