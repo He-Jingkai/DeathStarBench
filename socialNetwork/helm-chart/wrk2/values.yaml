@@ -7,3 +7,4 @@ wrk2:
   appImage: registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:1.3
   service: nginx-thrift.social-network:8080
   script: read-user-timeline.lua
+  url: http://nginx-thrift.social-network:8080/wrk2-api/user-timeline/read

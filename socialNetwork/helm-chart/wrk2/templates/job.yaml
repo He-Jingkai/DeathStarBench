@@ -36,6 +36,7 @@ spec:
         - "{{.Values.wrk2.timeout}}"
         - -s
         - "{{.Values.wrk2.script}}"
+        - "{{.Values.wrk2.url}}"
         volumeMounts:
         - mountPath: /scripts
           name: scripts
