@@ -22,8 +22,6 @@ spec:
         image: {{ .Values.wrk2.appImage }}
         imagePullPolicy: Always
         args:
-        - bash
-        - benchmark.sh
         - -c
         - "{{.Values.wrk2.connections}}"
         - -d
