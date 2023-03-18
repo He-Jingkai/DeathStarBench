@@ -13,6 +13,10 @@ spec:
     spec:
       restartPolicy: Never
       shareProcessNamespace: true
+      volumes:
+      - name: scripts
+        configMap:
+          name: social-network-scripts
       containers:
       - name: wrk2-benchmark
         image: {{ .Values.wrk2.appImage }}
@@ -29,5 +33,7 @@ spec:
         - -o
         - "{{.Values.wrk2.timeout}}"
         - -s
-        - "{{.Values.wrk2.lua}}"
-
+        - "{{.Values.wrk2.script}}"
+        volumeMounts:
+        - mountPath: /scripts
+          name: scripts

@@ -26,6 +26,6 @@ spec:
         - "{{.Values.args.service}}"
         - --port
         - "{{.Values.args.port}}"
-{{- if eq .Values.args.compose "true" }}
+{{- if eq .Values.args.compose true }}
         - --compose
 {{- end }}
