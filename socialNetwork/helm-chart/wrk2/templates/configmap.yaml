@@ -74,6 +74,15 @@ data:
       end
       return wrk.format(method, path, headers, body)
     end
+    function done(summary, latency, requests)
+      print(string.format("Total Requests: %d", summary.requests))
+      print(string.format("HTTP errors: %d", summary.errors.status))
+      print(string.format("Requests timed out: %d", summary.errors.timeout)) 
+      print(string.format("Bytes received: %d", summary.bytes))
+      print(string.format("Socket connect errors: %d", summary.errors.connect))
+      print(string.format("Socket read errors: %d", summary.errors.read))
+      print(string.format("Socket write errors: %d", summary.errors.write))
+    end
   mixed-workload.lua: |
     local socket = require("socket")
     local time = socket.gettime()*1000
@@ -181,7 +190,16 @@ data:
         else
           return compose_post()
         end
-      end
+    end
+    function done(summary, latency, requests)
+      print(string.format("Total Requests: %d", summary.requests))
+      print(string.format("HTTP errors: %d", summary.errors.status))
+      print(string.format("Requests timed out: %d", summary.errors.timeout)) 
+      print(string.format("Bytes received: %d", summary.bytes))
+      print(string.format("Socket connect errors: %d", summary.errors.connect))
+      print(string.format("Socket read errors: %d", summary.errors.read))
+      print(string.format("Socket write errors: %d", summary.errors.write))
+    end
   read-home-timeline.lua: |
     local socket = require("socket")
     local time = socket.gettime()*1000
@@ -200,6 +218,15 @@ data:
       local path = "http://{{.Values.wrk2.service}}/wrk2-api/home-timeline/read?" .. args
       return wrk.format(method, path, headers, nil)
     end
+    function done(summary, latency, requests)
+      print(string.format("Total Requests: %d", summary.requests))
+      print(string.format("HTTP errors: %d", summary.errors.status))
+      print(string.format("Requests timed out: %d", summary.errors.timeout)) 
+      print(string.format("Bytes received: %d", summary.bytes))
+      print(string.format("Socket connect errors: %d", summary.errors.connect))
+      print(string.format("Socket read errors: %d", summary.errors.read))
+      print(string.format("Socket write errors: %d", summary.errors.write))
+    end
   read-user-timeline.lua: |
     local socket = require("socket")
     local time = socket.gettime()*1000
@@ -217,4 +244,13 @@ data:
       headers["Content-Type"] = "application/x-www-form-urlencoded"
       local path = "http://{{.Values.wrk2.service}}/wrk2-api/user-timeline/read?" .. args
       return wrk.format(method, path, headers, nil)
+    end
+    function done(summary, latency, requests)
+      print(string.format("Total Requests: %d", summary.requests))
+      print(string.format("HTTP errors: %d", summary.errors.status))
+      print(string.format("Requests timed out: %d", summary.errors.timeout)) 
+      print(string.format("Bytes received: %d", summary.bytes))
+      print(string.format("Socket connect errors: %d", summary.errors.connect))
+      print(string.format("Socket read errors: %d", summary.errors.read))
+      print(string.format("Socket write errors: %d", summary.errors.write))
     end
