@@ -1,0 +1,10 @@
+wrk2:
+  duration: 120
+  connections: 96
+  timeout: 10
+  RPS: 3000
+  initDelay: 0
+  appImage: registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.6
+  service: nginx-web-server.media-microsvcs:8080
+  script: compose-review.lua
+  url: http://nginx-web-server.media-microsvcs:8080/wrk2-api/review/compose

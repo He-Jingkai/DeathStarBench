@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-media-microsvcs
+  labels:
+    app: init-media-microsvcs
+spec:
+  template:
+    metadata:
+      name: init-media-microsvcs
+      labels:
+        app: init-media-microsvcs
+    spec:
+      restartPolicy: Never
+      shareProcessNamespace: true
+      containers:
+      - name: init-media-microsvcs
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        args:
+        - python3
+        - write_movie_info.py
+        - -c
+        - "{{.Values.args.casts}}"
+        - -m
+        - "{{.Values.args.movies}}"
+        - --server_address
+        - "{{.Values.args.address}}"
