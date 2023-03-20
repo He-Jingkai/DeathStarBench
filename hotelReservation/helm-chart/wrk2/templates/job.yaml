@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wrk2-benchmark
+  labels:
+    app: wrk2-benchmark
+spec:
+  template:
+    metadata:
+      name: wrk2-benchmark
+      labels:
+        app: wrk2-benchmark
+    spec:
+      restartPolicy: Never
+      shareProcessNamespace: true
+      volumes:
+      - name: scripts
+        configMap:
+          name: social-network-scripts
+      containers:
+      - name: wrk2-benchmark
+        image: {{ .Values.wrk2.appImage }}
+        imagePullPolicy: Always
+        args:
+        - -c
+        - "{{.Values.wrk2.connections}}"
+        - -d
+        - "{{.Values.wrk2.duration}}"
+        - -r
+        - "{{.Values.wrk2.RPS}}"
+        - -i
+        - "{{.Values.wrk2.initDelay}}"
+        - -o
+        - "{{.Values.wrk2.timeout}}"
+        - -s
+        - "{{.Values.wrk2.script}}"
+        - "{{.Values.wrk2.url}}"
+        volumeMounts:
+        - mountPath: /scripts
+          name: scripts
