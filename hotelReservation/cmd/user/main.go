@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/harlow/go-micro-services/registry"
-	"github.com/harlow/go-micro-services/services/user"
-	"github.com/harlow/go-micro-services/tracing"
-	"github.com/harlow/go-micro-services/tune"
+	"hotel-reservation/pkg/registry"
+	"hotel-reservation/pkg/user"
+	"hotel-reservation/pkg/tracing"
+	"hotel-reservation/pkg/tune"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
