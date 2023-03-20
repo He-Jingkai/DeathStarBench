@@ -65,3 +65,18 @@ kubectl logs -n media-microsvcs job/wrk2-benchmark
 helm delete wrk2-benchmark -n media-microsvcs
 helm delete init-media-microsvcs -n media-microsvcs
 helm delete media-microsvcs -n media-microsvcs
+
+kubectl logs -n media-microsvcs --tail 10 svc/cast-info-service
+kubectl logs -n media-microsvcs --tail 10 svc/compose-review-service
+kubectl logs -n media-microsvcs --tail 10 svc/movie-id-service
+kubectl logs -n media-microsvcs --tail 10 svc/movie-info-service
+kubectl logs -n media-microsvcs --tail 10 svc/movie-review-service
+kubectl logs -n media-microsvcs --tail 10 svc/nginx-web-server
+kubectl logs -n media-microsvcs --tail 10 svc/page-service
+kubectl logs -n media-microsvcs --tail 10 svc/plot-service
+kubectl logs -n media-microsvcs --tail 10 svc/rating-service
+kubectl logs -n media-microsvcs --tail 10 svc/review-storage-service
+kubectl logs -n media-microsvcs --tail 10 svc/text-service
+kubectl logs -n media-microsvcs --tail 10 svc/unique-id-service
+kubectl logs -n media-microsvcs --tail 10 svc/user-review-service
+kubectl logs -n media-microsvcs --tail 10 svc/user-service

@@ -23,6 +23,20 @@ async def register_movie(session, addr, movie):
   }
   async with session.post(addr + "/wrk2-api/movie/register", data=params) as resp:
     return await resp.text()
+def printResults(results):
+  result_type_count = {}
+  for result in results:
+    try:
+      result_type_count[result] += 1
+    except KeyError:
+      result_type_count[result] = 1
+  for result_type, count in result_type_count.items():
+    if result_type == '' or result_type.startswith('Success'):
+      print('Succeeded:', count)
+    elif '500 Internal Server Error' in result_type:
+      print('Failed:', count, 'Error:', 'Internal Server Error')
+    else:
+      print('Failed:', count, 'Error:', result_type.strip())
 
 async def write_cast_info(addr, raw_casts):
   idx = 0
@@ -42,14 +56,16 @@ async def write_cast_info(addr, raw_casts):
       except:
         print("Warning: cast info missing!")
       if idx % 200 == 0:
-        resps = await asyncio.gather(*tasks)
         print(idx, "casts finished")
     resps = await asyncio.gather(*tasks)
+    printResults(resps)
     print(idx, "casts finished")
 
 async def write_movie_info(addr, raw_movies):
   idx = 0
-  tasks = []
+  tasks1 = []
+  tasks2 = []
+  tasks3 = []
   conn = aiohttp.TCPConnector(limit=200)
   async with aiohttp.ClientSession(connector=conn) as session:
     for raw_movie in raw_movies:
@@ -74,20 +90,26 @@ async def write_movie_info(addr, raw_movies):
       movie["avg_rating"] = raw_movie["vote_average"]
       movie["num_rating"] = raw_movie["vote_count"]
       task = asyncio.ensure_future(upload_movie_info(session, addr, movie))
-      tasks.append(task)
+      tasks1.append(task)
       plot = dict()
       plot["plot_id"] = raw_movie["id"]
       plot["plot"] = raw_movie["overview"]
       task = asyncio.ensure_future(upload_plot(session, addr, plot))
-      tasks.append(task)
+      tasks2.append(task)
       task = asyncio.ensure_future(register_movie(session, addr, movie))
-      tasks.append(task)
+      tasks3.append(task)
       idx += 1
       if idx % 200 == 0:
-        resps = await asyncio.gather(*tasks)
         print(idx, "movies finished")
-    resps = await asyncio.gather(*tasks)
-    print(idx, "movies finished")
+    resps1 = await asyncio.gather(*tasks1)
+    printResults(resps1)
+    print(idx, "upload_movie_info finished")
+    resps2 = await asyncio.gather(*tasks2)
+    printResults(resps2)
+    print(idx, "upload_plot finished")
+    resps3 = await asyncio.gather(*tasks3)
+    printResults(resps3)
+    print(idx, "register_movie finished")
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()

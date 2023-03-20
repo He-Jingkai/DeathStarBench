@@ -1,4 +1,4 @@
-image: registry.cn-hangzhou.aliyuncs.com/jkhe/init-media-microsvcs:1.0
+image: registry.cn-hangzhou.aliyuncs.com/jkhe/init-media-microsvcs:1.6-test
 args:
   address: http://nginx-web-server.media-microsvcs:8080
   casts: datasets/tmdb/casts.json
