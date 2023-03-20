@@ -52,7 +52,7 @@ helm install wrk2-benchmark ./wrk2 -n social-network \
     --set wrk2.connections=128                  \
     --set wrk2.initDelay=6                      \
     --set wrk2.script=read-user-timeline.lua    \
-    --set wrk2.appImage=registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.5
+    --set wrk2.appImage=registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.6
 
 while kubectl get jobs -n social-network \
             | grep wrk2-benchmark \
