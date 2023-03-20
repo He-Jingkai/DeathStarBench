@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: social-network-scripts
 data:
-  compose-post.lua: |
+  mixed-workload_type_1.lua: |
     local socket = require("socket")
     math.randomseed(socket.gettime()*1000)
     math.random(); math.random(); math.random()
