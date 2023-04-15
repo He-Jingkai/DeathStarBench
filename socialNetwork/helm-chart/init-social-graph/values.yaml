@@ -1,6 +1,6 @@
-image: registry.cn-hangzhou.aliyuncs.com/jkhe/init-social-graph:1.2
+image: registry.cn-hangzhou.aliyuncs.com/jkhe/init-social-graph:1.5
 args:
   service: nginx-thrift.social-network 
   port: 8080
-  compose: false
+  compose: true
   graph: soc-twitter-follows-mun

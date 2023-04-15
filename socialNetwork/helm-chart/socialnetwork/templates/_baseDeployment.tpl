@@ -19,10 +19,13 @@ spec:
       {{- if .Values.nodeName}}
       nodeName: {{ .Values.nodeName }}
       {{ end }}
+      {{- if .Values.serviceAccountName}}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{ end }}
       containers:
       {{- with .Values.container }}
       - name: "{{ .name }}"
-        image: {{ .dockerRegistry | default $.Values.global.dockerRegistry }}/{{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
+        image: {{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
         imagePullPolicy: {{ .imagePullPolicy | default $.Values.global.imagePullPolicy }}
         ports:
         {{- range $cport := .ports }}
@@ -45,13 +48,20 @@ spec:
         - {{ $arg }}
         {{- end -}}
         {{- end }}
-        {{- if .resources }}  
+        # {{- if .resources }}  
+        # resources:
+        #   {{ tpl .resources . | nindent 6 | trim }}
+        # {{- else if hasKey $.Values.global "resources" }}           
+        # resources:
+        #   {{ tpl $.Values.global.resources $ | nindent 6 | trim }}
+        # {{- end }}
         resources:
-          {{ tpl .resources . | nindent 6 | trim }}
-        {{- else if hasKey $.Values.global "resources" }}           
-        resources:
-          {{ tpl $.Values.global.resources $ | nindent 6 | trim }}
-        {{- end }}  
+          requests:
+            cpu: 100m
+            memory: 256M
+          limits:
+            cpu: 300m
+            memory: 384M
         {{- if $.Values.configMaps }}        
         volumeMounts: 
         {{- range $configMap := $.Values.configMaps }}
@@ -76,5 +86,11 @@ spec:
       {{- end }}
       hostname: {{ $.Values.name }}
       restartPolicy: {{ .Values.restartPolicy | default .Values.global.restartPolicy}}
-
+---
+{{- if .Values.serviceAccountName}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.serviceAccountName }}
+{{ end }}
   {{- end}}

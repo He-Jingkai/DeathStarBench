@@ -1,9 +1,9 @@
 wrk2:
-  duration: 120
-  connections: 96
-  timeout: 10
-  RPS: 3000
-  initDelay: 0
+  duration: 20
+  connections: 1
+  timeout: 100
+  RPS: 1
+  initDelay: 10
   appImage: registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.6
   service: nginx-thrift.social-network:8080
   script: read-user-timeline.lua

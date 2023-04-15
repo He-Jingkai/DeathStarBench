@@ -5,7 +5,7 @@ ports:
     targetPort: 8080
 
 container:
-  image: yg397/openresty-thrift
+  image: registry.cn-hangzhou.aliyuncs.com/jkhe/openresty-thrift
   imageVersion: xenial
   name: nginx-thrift
   ports: 
@@ -27,7 +27,7 @@ container:
 
 
 initContainer:
-  image: alpine/git
+  image: registry.cn-hangzhou.aliyuncs.com/jkhe/deathstar
   imageVersion: latest
   name: alpine-container
   volumeMounts:
@@ -42,8 +42,7 @@ initContainer:
   - name: keys
     mountPath: /keys
   command: "/bin/sh" 
-  args: ["-c", "git clone https://github.com/delimitrou/DeathStarBench.git /DeathStarBench &&
-            cp -r /DeathStarBench/socialNetwork/gen-lua/* /gen-lua/ &&
+  args: ["-c", "cp -r /DeathStarBench/socialNetwork/gen-lua/* /gen-lua/ &&
             cp -r /DeathStarBench/socialNetwork/docker/openresty-thrift/lua-thrift/* /lua-thrift/ &&
             cp -r /DeathStarBench/socialNetwork/nginx-web-server/lua-scripts/* /lua-scripts/ &&
             cp -r /DeathStarBench/socialNetwork/nginx-web-server/pages/* /pages/ &&

@@ -19,7 +19,7 @@ spec:
       containers:
       {{- with .Values.container }}
       - name: "{{ .name }}"
-        image: {{ .dockerRegistry | default $.Values.global.dockerRegistry }}/{{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
+        image: {{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
         imagePullPolicy: {{ .imagePullPolicy | default $.Values.global.imagePullPolicy }}
         ports:
         {{- range $cport := .ports }}
@@ -66,7 +66,7 @@ spec:
       initContainers:
       {{- with .Values.initContainer }}
       - name: "{{ .name }}"
-        image: {{ .dockerRegistry | default $.Values.global.dockerRegistry }}/{{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
+        image: {{ .image }}:{{ .imageVersion | default $.Values.global.defaultImageVersion }}
         imagePullPolicy: {{ .imagePullPolicy | default $.Values.global.imagePullPolicy }}
         {{- if .command}}
         command: 
