@@ -1,12 +1,14 @@
 services:
-- compose-post-service
-- home-timeline-service
-- media-service
-- post-storage-service
-- social-graph-service
-- text-service
 - unique-id-service
 - url-shorten-service
-- user-mention-service
-- user-service
+- media-service
+- text-service
+
+# - home-timeline-service
+# - compose-post-service
+# - user-service
+# - social-graph-service
+
+# - post-storage-service
+# - user-mention-service
 - user-timeline-service

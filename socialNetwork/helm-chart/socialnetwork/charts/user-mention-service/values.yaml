@@ -6,7 +6,8 @@ ports:
 
 container:
   command: UserMentionService
-  image: deathstarbench/social-network-microservices
+  image: hejingkai/social-network-microservices
+  imageVersion: latest-all
   name: user-mention-service
   ports: 
   - containerPort: 9090
