@@ -11,6 +11,7 @@ spec:
       labels:
         app: wrk2-benchmark
     spec:
+      nodeName: {{.Values.nodeName}}
       restartPolicy: Never
       shareProcessNamespace: true
       volumes:

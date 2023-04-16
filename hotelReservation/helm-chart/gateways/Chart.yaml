@@ -1,0 +1,6 @@
+apiVersion: v2
+name: social-graph-gateway
+description: istio gateway for socialNetwork benchmark
+type: application
+version: 0.1.0
+appVersion: 0.1.0

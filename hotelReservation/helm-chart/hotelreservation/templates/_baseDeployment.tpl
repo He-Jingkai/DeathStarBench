@@ -16,6 +16,12 @@ spec:
         service: {{ .Values.name }}
         app: {{ .Values.name }}
     spec:
+      {{- if .Values.nodeName}}
+      nodeName: {{ .Values.nodeName }}
+      {{ end }}
+      {{- if .Values.serviceAccountName}}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{ end }}
       containers:
       {{- with .Values.container }}
       - name: "{{ .name }}"
@@ -59,4 +65,11 @@ spec:
       {{- end }}
       hostname: {{ $.Values.name }}
       restartPolicy: {{ .Values.restartPolicy | default .Values.global.restartPolicy}}
+---
+{{- if .Values.serviceAccountName}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.serviceAccountName }}
+{{ end }}
 {{- end}}
