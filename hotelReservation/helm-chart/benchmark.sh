@@ -48,8 +48,10 @@ function grace() {
 # user
 # mongodb-user
 
+kubectl create ns hotel-reserve
+kubectl label ns hotel-reserve istio.io/dataplane-mode=ambient
 replicas=3
-helm install hotel-reservation ./hotelreservation -n hotel-reservation \
+helm install hotel-reserve ./hotelreservation -n hotel-reserve \
     --set consul.nodeName=snic-val17  \
     --set geo.nodeName=snic-val17  \
     --set memcached-profile.nodeName=snic-val17  \
@@ -70,7 +72,7 @@ helm install hotel-reservation ./hotelreservation -n hotel-reservation \
     --set search.nodeName=snic-val17  \
     --set frontend.nodeName=val16
 
-helm install hotel-reservation ./hotelreservation -n hotel-reservation \
+helm install hotel-reserve ./hotelreservation -n hotel-reserve \
     --set consul.nodeName=val17  \
     --set geo.nodeName=val17  \
     --set memcached-profile.nodeName=val17  \
@@ -100,19 +102,19 @@ helm install hotel-reservation ./hotelreservation -n hotel-reservation \
     # --set search.replicas=$replicas               \
     # --set user.replicas=$replicas   
 
-grace "kubectl get pods --all-namespaces | grep hotel-reservation | grep -v Running" 30
+grace "kubectl get pods --all-namespaces | grep hotel-reserve | grep -v Running" 30
 
 #  --set wrk2.script choose from mixed-workload_type_1.lua recommend.lua reserve.lua search_hotel.lua
-helm install wrk2-benchmark ./wrk2 -n hotel-reservation \
-    --set wrk2.RPS=10                         \
-    --set wrk2.duration=20                      \
+helm install wrk2-benchmark ./wrk2 -n hotel-reserve \
+    --set wrk2.RPS=2                         \
+    --set wrk2.duration=120                      \
     --set wrk2.connections=2                  \
     --set wrk2.initDelay=10                      \
-    --set wrk2.script=recommend.lua    \
+    --set wrk2.script=mixed-workload_type_1.lua   \
     --set wrk2.appImage=registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.6 \
     --set nodeName=val16
 
-while kubectl get jobs -n hotel-reservation \
+while kubectl get jobs -n hotel-reserve \
             | grep wrk2-benchmark \
             | grep -qv 1/1; do
         sleep 10
@@ -121,14 +123,15 @@ done
 
 kubectl label node snic-val17 offmesh.test.waypoint.target=target
 kubectl label node val17 offmesh.test.waypoint.target=target
-kubectl label node snic-val16 offmesh.test.waypoint.target=target
-helm install hotel-reservation-gateway ./gateways -n hotel-reservation
 
-helm delete hotel-reservation-gateway -n hotel-reservation
+helm install hotel-reserve-gateway ./gateways -n hotel-reserve
 
-kubectl label node snic-val16 offmesh.test.waypoint.target-
+helm delete hotel-reserve-gateway -n hotel-reserve
 
-kubectl logs -n hotel-reservation job/wrk2-benchmark
+kubectl label node val17 offmesh.test.waypoint.target-
+kubectl label node snic-val17 offmesh.test.waypoint.target-
 
-helm delete wrk2-benchmark -n hotel-reservation
-helm delete hotel-reservation -n hotel-reservation
+kubectl logs -n hotel-reserve job/wrk2-benchmark
+
+helm delete wrk2-benchmark -n hotel-reserve
+helm delete hotel-reserve -n hotel-reserve

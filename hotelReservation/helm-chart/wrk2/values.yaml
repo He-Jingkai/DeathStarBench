@@ -5,6 +5,6 @@ wrk2:
   RPS: 3000
   initDelay: 0
   appImage: registry.cn-hangzhou.aliyuncs.com/jkhe/wrk2:2.6
-  service: frontend.hotel-reservation:5000
+  service: frontend.hotel-reserve:5000
   script: mixed-workload_type_1.lua
-  url: http://frontend.hotel-reservation:5000
+  url: http://frontend.hotel-reserve:5000

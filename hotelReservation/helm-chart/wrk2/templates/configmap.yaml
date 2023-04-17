@@ -148,7 +148,7 @@ data:
     math.randomseed(socket.gettime()*1000)
     math.random(); math.random(); math.random()
 
-    local url = "http://localhost:5000"
+    local url = "http://{{.Values.wrk2.service}}"
 
     local function recommend()
       local coin = math.random()
@@ -190,7 +190,7 @@ data:
     math.randomseed(socket.gettime()*1000)
     math.random(); math.random(); math.random()
 
-    local url = "http://localhost:5000"
+    local url = "http://{{.Values.wrk2.service}}"
 
     local function get_user()
       local id = math.random(0, 500)
@@ -254,7 +254,7 @@ data:
     math.randomseed(socket.gettime()*1000)
     math.random(); math.random(); math.random()
 
-    local url = "http://localhost:5000"
+    local url = "http://{{.Values.wrk2.service}}"
 
     local function search_hotel() 
       local in_date = math.random(9, 23)
@@ -304,7 +304,7 @@ data:
     math.randomseed(socket.gettime()*1000)
     math.random(); math.random(); math.random()
 
-    local url = "http://localhost:5000"
+    local url = "http://{{.Values.wrk2.service}}"
 
     local function get_user()
       local id = math.random(0, 500)

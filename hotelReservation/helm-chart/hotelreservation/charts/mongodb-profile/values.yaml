@@ -8,7 +8,7 @@ ports:
  
 container:
   image: mongo
-  imageVersion: 5.0
+  imageVersion: 4.4.6
   name: hotel-reserv-profile-mongo
   ports:
   - containerPort: 27017
